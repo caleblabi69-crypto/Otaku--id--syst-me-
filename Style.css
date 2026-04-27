@@ -1,0 +1,67 @@
+body {
+    background-color: #0d0d15;
+    color: #ffffff;
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    padding: 20px;
+}
+
+.main-container { max-width: 600px; margin: auto; }
+
+.form-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background: #1a1a2e;
+    padding: 25px;
+    border-radius: 15px;
+    border: 1px solid #3a3a5a;
+}
+
+input, select, button {
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+}
+
+input { background: #252545; color: white; }
+
+button {
+    background: #6c5ce7;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover { background: black !important; border: 1px solid #6c5ce7; }
+
+.btn-alt { background: #4834d4; }
+.btn-danger { background: #d63031; }
+
+.custom-file-upload {
+    background: #2d3436;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #a29bfe;
+}
+
+#otakuCanvas {
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(108, 92, 231, 0.5);
+}
+
+#downloadLink {
+    display: block;
+    margin-top: 20px;
+    padding: 15px;
+    background: #00cec9;
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 8px;
+}

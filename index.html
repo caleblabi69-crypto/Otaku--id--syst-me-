@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Otaku ID System - Officiel</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="main-container">
+        <div id="authSection">
+            <h1>Espace Membre Otaku</h1>
+            <div class="form-grid">
+                <input type="text" id="username" placeholder="Nom d'utilisateur">
+                <input type="password" id="password" placeholder="Mot de passe">
+                <button onclick="login()">Se Connecter</button>
+                <button onclick="register()" class="btn-alt">Créer un Compte</button>
+            </div>
+        </div>
+
+        <div id="generatorSection" style="display:none;">
+            <h1>Créer ta Carte Otaku</h1>
+            <p>Bienvenue, <span id="userDisplay" style="color:#8e7cc3"></span> !</p>
+            
+            <div class="form-grid">
+                <input type="text" id="pseudoInput" placeholder="Ton Pseudo">
+                <input type="text" id="statutInput" placeholder="Ton Statut (ex: Otaku Officiel)">
+                <input type="text" id="passionsInput" placeholder="Tes Passions (ex: Manga • Sport)">
+                
+                <select id="classementInput">
+                    <option value="" disabled selected>Ton Niveau</option>
+                    <option value="A ★★★★">Niveau A</option>
+                    <option value="S ★★★★★">Niveau S</option>
+                    <option value="SS ★★★★★★">Niveau SS</option>
+                    <option value="SSS ★★★★★★★">Niveau SSS</option>
+                </select>
+                
+                <label for="imageInput" class="custom-file-upload">📷 Choisir ma Photo</label>
+                <input type="file" id="imageInput" accept="image/*">
+                
+                <button onclick="generateFinalCard()">Générer la Carte</button>
+                <button onclick="logout()" class="btn-danger">Déconnexion</button>
+            </div>
+
+            <canvas id="otakuCanvas" width="1000" height="641" style="display:none;"></canvas>
+            <br>
+            <a id="downloadLink" style="display:none;" class="download-btn">💾 Télécharger ma carte</a>
+        </div>
+    </div
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <script src="script.js"></script>
+</body>
+</html>
