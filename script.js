@@ -82,6 +82,12 @@ function generateFinalCard() {
                     downloadLink.href = canvas.toDataURL("image/png");
                     downloadLink.download = "Carte_" + pseudo + ".png";
                     downloadLink.style.display = "inline-block";
+                    
+                    // Ajouter un événement pour le téléchargement avec dialogue
+                    downloadLink.onclick = async (e) => {
+                        e.preventDefault();
+                        await downloadCardWithDialog(canvas, pseudo);
+                    };
                 }
             }
         };
@@ -111,4 +117,62 @@ function generateFinalCard() {
             }
         }, 150);
     };
+}
+
+// --- 3. FONCTION DE TÉLÉCHARGEMENT AVEC DIALOGUE DE SÉLECTION DE DOSSIER ---
+async function downloadCardWithDialog(canvas, pseudo) {
+    try {
+        // Vérifier si l'API File System Access est disponible
+        if (!window.showSaveFilePicker) {
+            console.warn("L'API File System Access n'est pas disponible. Utilisation du téléchargement classique.");
+            downloadCardClassic(canvas, pseudo);
+            return;
+        }
+
+        // Ouvrir le dialogue de sélection de dossier
+        const fileHandle = await window.showSaveFilePicker({
+            suggestedName: `Carte_${pseudo}.png`,
+            types: [
+                {
+                    description: 'Images PNG',
+                    accept: { 'image/png': ['.png'] }
+                }
+            ]
+        });
+
+        // Convertir le canvas en blob
+        canvas.toBlob(async (blob) => {
+            try {
+                // Créer un writer pour écrire le fichier
+                const writable = await fileHandle.createWritable();
+                await writable.write(blob);
+                await writable.close();
+                
+                alert("✅ Carte sauvegardée avec succès !");
+            } catch (error) {
+                console.error("Erreur lors de l'écriture du fichier :", error);
+                alert("❌ Erreur lors de la sauvegarde du fichier.");
+            }
+        }, 'image/png');
+
+    } catch (error) {
+        // Si l'utilisateur annule le dialogue
+        if (error.name === 'AbortError') {
+            console.log("Téléchargement annulé par l'utilisateur.");
+        } else {
+            console.error("Erreur :", error);
+            // Fallback : utiliser le téléchargement classique
+            downloadCardClassic(canvas, pseudo);
+        }
+    }
+}
+
+// --- 4. FALLBACK : TÉLÉCHARGEMENT CLASSIQUE (pour les navigateurs non-compatibles) ---
+function downloadCardClassic(canvas, pseudo) {
+    const link = document.createElement('a');
+    link.href = canvas.toDataURL("image/png");
+    link.download = `Carte_${pseudo}.png`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 }
