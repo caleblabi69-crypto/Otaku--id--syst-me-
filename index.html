@@ -42,21 +42,17 @@
                 <button onclick="logout()" class="btn-danger">Déconnexion</button>
             </div>
 
+            <!-- Aperçu de l'image -->
+            <img id="imagePreview" style="display:none; max-width: 200px; margin-top: 10px;">
+
             <canvas id="otakuCanvas" width="1000" height="641" style="display:none;"></canvas>
             <br>
             <a id="downloadLink" style="display:none;" class="download-btn">💾 Télécharger ma carte</a>
         </div>
     </div>
+
+    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
     <script src="script.js"></script>
-    <!-- Script QRCode Library -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
-<!-- Bouton de déconnexion -->
-<button onclick="logout()">Déconnexion</button>
-
-<!-- Aperçu de l'image -->
-<img id="imagePreview" style="display:none; max-width: 200px; margin-top: 10px;">
 </body>
 </html>
