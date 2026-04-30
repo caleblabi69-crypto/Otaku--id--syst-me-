@@ -11,8 +11,8 @@
         <div id="authSection">
             <h1>Espace Membre Otaku</h1>
             <div class="form-grid">
-                <input type="text" id="username" placeholder="Nom d'utilisateur">
-                <input type="password" id="password" placeholder="Mot de passe">
+                <input type="text" id="username" placeholder="Nom d'utilisateur (min 3 caractères)">
+                <input type="password" id="password" placeholder="Mot de passe (min 6 caractères)">
                 <button onclick="login()">Se Connecter</button>
                 <button onclick="register()" class="btn-alt">Créer un Compte</button>
             </div>
@@ -36,17 +36,18 @@
                 </select>
                 
                 <label for="imageInput" class="custom-file-upload">📷 Choisir ma Photo</label>
-                <input type="file" id="imageInput" accept="image/*">
+                <input type="file" id="imageInput" accept="image/*" onchange="previewImage()">
                 
                 <button onclick="generateFinalCard()">Générer la Carte</button>
                 <button id="downloadBtn" style="display:none;" class="download-btn" onclick="handleDownload()">💾 Télécharger ma carte</button>
+                <button id="resetBtn" style="display:none;" class="btn-alt" onclick="resetCard()">🔄 Régénérer</button>
                 <button onclick="logout()" class="btn-danger">Déconnexion</button>
             </div>
 
             <!-- Aperçu de l'image -->
-            <img id="imagePreview" style="display:none; max-width: 200px; margin-top: 10px;">
+            <img id="imagePreview" style="display:none; max-width: 200px; margin-top: 10px; border-radius: 8px; border: 2px solid #8e7cc3;">
 
-            <canvas id="otakuCanvas" width="1000" height="641" style="display:none;"></canvas>
+            <canvas id="otakuCanvas" width="1000" height="641" style="display:none; margin-top: 20px; border: 2px solid #8e7cc3; border-radius: 8px; max-width: 100%;"></canvas>
             <br>
             <div id="downloadLink" style="display:none;"></div>
         </div>
