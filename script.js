@@ -20,6 +20,13 @@ function login() {
     }
 }
 
+function logout() {
+    document.getElementById('authSection').style.display = 'block';
+    document.getElementById('generatorSection').style.display = 'none';
+    document.getElementById('username').value = '';
+    document.getElementById('password').value = '';
+}
+
 // --- 2. GÉNÉRATEUR DE CARTE AVEC QR CODE ---
 function generateFinalCard() {
     const canvas = document.getElementById('otakuCanvas');
@@ -56,7 +63,6 @@ function generateFinalCard() {
         ctx.fillText("Niveau " + classement, 350, 480); 
 
         // --- AJOUT DU QR CODE ---
-        // On crée un petit conteneur temporaire pour le QR Code
         const qrDiv = document.createElement('div');
         new QRCode(qrDiv, {
             text: lienMonSite,
@@ -66,33 +72,43 @@ function generateFinalCard() {
             colorLight : "#ffffff",
         });
 
-        // On attend que le QR code soit généré puis on le dessine sur le canvas
-        setTimeout(() => {
-            const qrImg = qrDiv.querySelector('img');
-            if(qrImg) {
-                // Positionnement en bas à droite (près de l'étoile/logo)
-                ctx.drawImage(qrImg, 900, 545, 75, 75);
-            }
-        }, 100);
+        // Gestion de la photo et du téléchargement
+        let photoLoaded = false;
 
-        // Gestion de la photo
+        const finishCard = () => {
+            if (photoLoaded || !imageInput.files || !imageInput.files[0]) {
+                const downloadLink = document.getElementById('downloadLink');
+                if(downloadLink) {
+                    downloadLink.href = canvas.toDataURL("image/png");
+                    downloadLink.download = "Carte_" + pseudo + ".png";
+                    downloadLink.style.display = "inline-block";
+                }
+            }
+        };
+
         if (imageInput.files && imageInput.files[0]) {
             const reader = new FileReader();
             reader.onload = function(e) {
                 const userImg = new Image();
                 userImg.onload = function() {
                     ctx.drawImage(userImg, 38, 130, 278, 355);
-                    
-                    const downloadLink = document.getElementById('downloadLink');
-                    if(downloadLink) {
-                        downloadLink.href = canvas.toDataURL("image/png");
-                        downloadLink.download = "Carte_" + pseudo + ".png";
-                        downloadLink.style.display = "inline-block";
-                    }
+                    photoLoaded = true;
+                    finishCard();
                 };
                 userImg.src = e.target.result;
             };
             reader.readAsDataURL(imageInput.files[0]);
+        } else {
+            photoLoaded = true;
+            finishCard();
         }
+
+        // QR code avec délai suffisant
+        setTimeout(() => {
+            const qrImg = qrDiv.querySelector('img');
+            if(qrImg) {
+                ctx.drawImage(qrImg, 900, 545, 75, 75);
+            }
+        }, 150);
     };
 }
