@@ -39,6 +39,7 @@
                 <input type="file" id="imageInput" accept="image/*">
                 
                 <button onclick="generateFinalCard()">Générer la Carte</button>
+                <button id="downloadBtn" style="display:none;" class="download-btn" onclick="handleDownload()">💾 Télécharger ma carte</button>
                 <button onclick="logout()" class="btn-danger">Déconnexion</button>
             </div>
 
@@ -47,7 +48,7 @@
 
             <canvas id="otakuCanvas" width="1000" height="641" style="display:none;"></canvas>
             <br>
-            <a id="downloadLink" style="display:none;" class="download-btn">💾 Télécharger ma carte</a>
+            <div id="downloadLink" style="display:none;"></div>
         </div>
     </div>
 
