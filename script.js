@@ -77,17 +77,9 @@ function generateFinalCard() {
 
         const finishCard = () => {
             if (photoLoaded || !imageInput.files || !imageInput.files[0]) {
-                const downloadLink = document.getElementById('downloadLink');
-                if(downloadLink) {
-                    downloadLink.href = canvas.toDataURL("image/png");
-                    downloadLink.download = "Carte_" + pseudo + ".png";
-                    downloadLink.style.display = "inline-block";
-                    
-                    // Ajouter un événement pour le téléchargement avec dialogue
-                    downloadLink.onclick = async (e) => {
-                        e.preventDefault();
-                        await downloadCardWithDialog(canvas, pseudo);
-                    };
+                const downloadBtn = document.getElementById('downloadBtn');
+                if(downloadBtn) {
+                    downloadBtn.style.display = "inline-block";
                 }
             }
         };
@@ -120,6 +112,12 @@ function generateFinalCard() {
 }
 
 // --- 3. FONCTION DE TÉLÉCHARGEMENT AVEC DIALOGUE DE SÉLECTION DE DOSSIER ---
+function handleDownload() {
+    const canvas = document.getElementById('otakuCanvas');
+    const pseudo = document.getElementById('pseudoInput').value || "Utilisateur";
+    downloadCardWithDialog(canvas, pseudo);
+}
+
 async function downloadCardWithDialog(canvas, pseudo) {
     try {
         // Vérifier si l'API File System Access est disponible
