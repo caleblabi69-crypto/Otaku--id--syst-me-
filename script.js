@@ -336,13 +336,35 @@ async function downloadCardWithDialog(canvas, pseudo) {
 // --- 4. FALLBACK : TÉLÉCHARGEMENT CLASSIQUE (pour les navigateurs non-compatibles) ---
 function downloadCardClassic(canvas, pseudo) {
     try {
-        const link = document.createElement('a');
-        link.href = canvas.toDataURL("image/png");
-        link.download = `Carte_${pseudo}.png`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        alert("✅ Carte téléchargée avec succès !");
+        canvas.toBlob((blob) => {
+            if (!blob) {
+                console.error("Erreur lors de la conversion de la carte en image.");
+                alert("❌ Erreur lors du téléchargement");
+                return;
+            }
+
+            let objectUrl;
+            const link = document.createElement('a');
+
+            try {
+                objectUrl = URL.createObjectURL(blob);
+                link.href = objectUrl;
+                link.download = `Carte_${pseudo}.png`;
+                document.body.appendChild(link);
+                link.click();
+                alert("✅ Carte téléchargée avec succès !");
+            } catch (error) {
+                console.error("Erreur lors du téléchargement :", error);
+                alert("❌ Erreur lors du téléchargement");
+            } finally {
+                if (link.parentNode) {
+                    document.body.removeChild(link);
+                }
+                if (objectUrl) {
+                    window.setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
+                }
+            }
+        }, "image/png");
     } catch (error) {
         console.error("Erreur lors du téléchargement :", error);
         alert("❌ Erreur lors du téléchargement");
